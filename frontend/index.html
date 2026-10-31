@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Cost Estimation & Profit Analysis System</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom Application Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 antialiased min-h-screen flex">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 bg-slate-950 text-slate-400 flex flex-col shrink-0 border-r border-slate-900 select-none">
+        <!-- Brand Header -->
+        <div class="h-16 px-6 flex items-center gap-3 border-b border-slate-900 bg-slate-950/60">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-400 text-white flex items-center justify-center font-black text-base shadow-lg shadow-indigo-500/25">
+                ₹
+            </div>
+            <div>
+                <span class="font-extrabold text-sm tracking-tight text-white block leading-tight">Cost Engine</span>
+                <span class="text-2xs text-indigo-400 font-mono font-medium block">PROFIT ANALYTICS</span>
+            </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
+            <div class="px-3 pb-2 text-2xs font-bold uppercase tracking-wider text-slate-500">Analytics & Catalog</div>
+            
+            <a href="#" data-route="dashboard" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                Dashboard Overview
+            </a>
+
+            <a href="#" data-route="products" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                Products Management
+            </a>
+
+            <a href="#" data-route="materials" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                Raw Materials & Pricing
+            </a>
+
+            <div class="px-3 pt-4 pb-2 text-2xs font-bold uppercase tracking-wider text-slate-500">Engineering & Costing</div>
+
+            <a href="#" data-route="bom" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                Bill of Materials (BOM)
+            </a>
+
+            <a href="#" data-route="overheads" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Manufacturing & Overheads
+            </a>
+
+            <a href="#" data-route="estimations" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                Cost Estimations & Approval
+            </a>
+
+            <div class="px-3 pt-4 pb-2 text-2xs font-bold uppercase tracking-wider text-slate-500">Financial Sensitivity</div>
+
+            <a href="#" data-route="impact" class="nav-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                Price Change Impact
+            </a>
+        </nav>
+
+        <!-- System Architecture Pill in Sidebar Footer -->
+        <div class="p-4 border-t border-slate-900 bg-slate-950/40">
+            <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs">
+                <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-slate-400 font-semibold text-2xs uppercase">Backend Engine</span>
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                </div>
+                <div class="text-slate-200 font-bold text-xs truncate">Spring Boot 3.3.0</div>
+                <div class="text-slate-500 text-2xs font-mono mt-0.5">PostgreSQL &bull; Java 17</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+        <!-- Top Application Header -->
+        <header class="h-16 bg-white border-b border-slate-200/80 px-8 flex items-center justify-between shrink-0">
+            <!-- Breadcrumbs / Page Title -->
+            <div class="flex items-center gap-3">
+                <span class="text-xs text-slate-400 font-medium">System</span>
+                <span class="text-slate-300">/</span>
+                <span id="header-breadcrumb" class="text-sm font-bold text-slate-900">Executive Dashboard</span>
+            </div>
+
+            <!-- Right Controls: Environment Mode Switcher & User Profile -->
+            <div class="flex items-center gap-5">
+                <!-- Mock Mode Toggle Switch -->
+                <div class="flex items-center gap-2.5 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-600 text-2xs">Data Mode:</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input id="toggle-mock-mode" type="checkbox" checked class="sr-only peer">
+                        <div class="w-8 h-4 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-600"></div>
+                    </label>
+                    <span id="mock-label" class="text-xs font-bold text-indigo-700 font-mono">MOCK</span>
+                </div>
+
+                <!-- Currency Standard Badge -->
+                <div class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold font-mono">
+                    <span>INR (₹) Standard</span>
+                </div>
+
+                <!-- User Profile Avatar -->
+                <div class="flex items-center gap-3 pl-2 border-l border-slate-200">
+                    <div class="w-8 h-8 rounded-full bg-slate-900 text-white font-bold text-xs flex items-center justify-center">
+                        FA
+                    </div>
+                    <div class="hidden md:block">
+                        <span class="text-xs font-bold text-slate-900 block leading-tight">Financial Architect</span>
+                        <span class="text-2xs text-slate-400 block">Costing & Audit</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Viewport for Pages -->
+        <main id="main-viewport" class="flex-1 p-8 overflow-y-auto">
+            <!-- Rendered asynchronously by app.js router -->
+        </main>
+    </div>
+
+    <!-- Central Toast Container -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 max-w-md pointer-events-auto"></div>
+
+    <!-- Master Application Entry Script -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
+
